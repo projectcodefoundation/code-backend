@@ -1,0 +1,52 @@
+datasource db {
+    provider = "postgresql"
+    url = "***"
+}
+
+model User {
+    id    Int    @id @default(autoincrement())
+    email String @unique
+    name  String
+    bio   String @default("")
+}
+
+model Course {
+    id       Int       @id @default(autoincrement())
+    title    String
+    sections Section[]
+}
+
+model Section {
+    id    Int    @id @default(autoincrement())
+    title String
+    lessons Lesson[]
+}
+
+model Lesson {
+    id     Int     @id @default(autoincrement())
+    title  String
+    blocks Block[]
+}
+
+model Block {
+    id     Int       @id @default(autoincrement())
+    type   BlockType
+    lang   Language
+    source String
+}
+
+enum BlockType {
+    Markdown
+    Code
+}
+
+enum Language {
+    py
+    js
+    html
+    text
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
